@@ -3,6 +3,7 @@ import Block from '../types/Block';
 import BlockPosition from '../types/BlockPosition';
 import Snake from './Snake';
 import Food from './Food';
+import throttle from '../helpers/throttle'
 
 /**
  * Game.
@@ -218,8 +219,9 @@ class Game {
      * Adds event listeners.
      */
     _addEventListeners() : void {
+        const throttledKeypresses : Function = throttle(this._handleKeypress, this._speed).bind(this)
         window.addEventListener('keyup', (e) => {
-            this._handleKeypress(e);
+            throttledKeypresses(e)
         });
     }
 
